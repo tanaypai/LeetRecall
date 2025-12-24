@@ -161,6 +161,52 @@
   color: #fff;
 }
 
+.lsr-option-group input[type="text"] {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lsr-option-group input[type="text"]:hover {
+  border-color: rgba(255, 161, 22, 0.5);
+}
+
+.lsr-option-group input[type="text"]:focus {
+  outline: none;
+  border-color: #ffa116;
+}
+
+.lsr-option-group input[type="text"]::placeholder {
+  color: #666;
+}
+
+.lsr-hint {
+  font-size: 11px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.lsr-custom-intervals {
+  animation: lsr-fade-in 0.2s ease-out;
+}
+
+@keyframes lsr-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .lsr-preview {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 12px;

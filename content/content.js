@@ -265,7 +265,7 @@ class LeetCodeSubmissionDetector {
               </select>
             </div>
             
-            <div class="lsr-option-group">
+            <div class="lsr-option-group" id="lsr-rep-count-group">
               <label>Number of Repetitions:</label>
               <select id="lsr-rep-count">
                 <option value="3">3 repetitions</option>
@@ -273,6 +273,12 @@ class LeetCodeSubmissionDetector {
                 <option value="7">7 repetitions</option>
                 <option value="10">10 repetitions</option>
               </select>
+            </div>
+            
+            <div class="lsr-option-group lsr-custom-intervals" id="lsr-custom-intervals" style="display: none;">
+              <label>Custom Intervals (comma-separated days):</label>
+              <input type="text" id="lsr-custom-input" placeholder="e.g., 1, 3, 7, 14, 30" value="1, 3, 7, 14, 30">
+              <small class="lsr-hint">Enter days from today, separated by commas</small>
             </div>
           </div>
           
@@ -303,6 +309,9 @@ class LeetCodeSubmissionDetector {
     const addBtn = modal.querySelector('#lsr-add-btn');
     const intervalSelect = modal.querySelector('#lsr-interval-preset');
     const repCountSelect = modal.querySelector('#lsr-rep-count');
+    const customIntervalsDiv = modal.querySelector('#lsr-custom-intervals');
+    const repCountGroup = modal.querySelector('#lsr-rep-count-group');
+    const customInput = modal.querySelector('#lsr-custom-input');
     
     const closeModal = () => {
       modal.remove();
@@ -315,8 +324,15 @@ class LeetCodeSubmissionDetector {
       if (e.target === modal) closeModal();
     });
     
-    intervalSelect.addEventListener('change', () => this.updateDatesPreview());
+    intervalSelect.addEventListener('change', () => {
+      const isCustom = intervalSelect.value === 'custom';
+      customIntervalsDiv.style.display = isCustom ? 'block' : 'none';
+      repCountGroup.style.display = isCustom ? 'none' : 'block';
+      this.updateDatesPreview();
+    });
+    
     repCountSelect.addEventListener('change', () => this.updateDatesPreview());
+    customInput.addEventListener('input', () => this.updateDatesPreview());
     
     addBtn.addEventListener('click', async () => {
       const dates = this.calculateScheduledDates();
@@ -334,11 +350,24 @@ class LeetCodeSubmissionDetector {
     const intervals = {
       standard: [1, 3, 7, 14, 30, 60, 90],
       intensive: [1, 2, 4, 7, 14, 21, 30],
-      relaxed: [1, 7, 14, 30, 60, 90, 120],
-      custom: [1, 3, 7, 14, 30, 60, 90]
+      relaxed: [1, 7, 14, 30, 60, 90, 120]
     };
     
     return intervals[preset].slice(0, count);
+  }
+  
+  getCustomIntervalDays() {
+    const customInput = document.querySelector('#lsr-custom-input');
+    const inputValue = customInput?.value || '1, 3, 7, 14, 30';
+    
+    // Parse comma-separated values and filter valid numbers
+    const intervals = inputValue
+      .split(',')
+      .map(s => parseInt(s.trim()))
+      .filter(n => !isNaN(n) && n > 0)
+      .sort((a, b) => a - b);
+    
+    return intervals.length > 0 ? intervals : [1, 3, 7, 14, 30];
   }
   
   calculateScheduledDates() {
@@ -346,8 +375,14 @@ class LeetCodeSubmissionDetector {
     const repCountSelect = document.querySelector('#lsr-rep-count');
     
     const preset = intervalSelect.value;
-    const count = parseInt(repCountSelect.value);
-    const intervals = this.getIntervalDays(preset, count);
+    let intervals;
+    
+    if (preset === 'custom') {
+      intervals = this.getCustomIntervalDays();
+    } else {
+      const count = parseInt(repCountSelect.value);
+      intervals = this.getIntervalDays(preset, count);
+    }
     
     const today = new Date();
     today.setHours(0, 0, 0, 0);
