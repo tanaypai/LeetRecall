@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LeetCode Spaced Repetition</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 LeetCode Spaced Rep</h1>
+    </header>
+    
+    <div class="calendar-container">
+      <div class="calendar-header">
+        <button id="prev-month" class="nav-btn">&lt;</button>
+        <h2 id="current-month"></h2>
+        <button id="next-month" class="nav-btn">&gt;</button>
+      </div>
+      
+      <div class="calendar-weekdays">
+        <span>Sun</span>
+        <span>Mon</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
+      </div>
+      
+      <div id="calendar-days" class="calendar-days"></div>
+    </div>
+    
+    <div id="day-details" class="day-details hidden">
+      <div class="day-details-header">
+        <h3 id="selected-date"></h3>
+        <button id="close-details" class="close-btn">&times;</button>
+      </div>
+      <div id="problems-list" class="problems-list"></div>
+    </div>
+    
+    <div class="stats">
+      <div class="stat-item">
+        <span class="stat-number" id="today-count">0</span>
+        <span class="stat-label">Due Today</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" id="total-count">0</span>
+        <span class="stat-label">Total Problems</span>
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
