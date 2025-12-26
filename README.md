@@ -17,7 +17,9 @@ A Chrome extension that helps you retain LeetCode solutions through spaced repet
 ## 🚀 Installation
 
 ### From Chrome Web Store
-*(Coming soon)*
+[![Available in the Chrome Web Store](https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/iNEddTyWiMfLSwFD6qGq.png)](https://chromewebstore.google.com/detail/leetcached/blkpkeambbkiljehnlmclemjegnmhakm)
+
+[**Install LeetCached**](https://chromewebstore.google.com/detail/leetcached/blkpkeambbkiljehnlmclemjegnmhakm)
 
 ### Manual Installation (Developer Mode)
 1. Clone or download this repository
